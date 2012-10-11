@@ -33,6 +33,7 @@ $ ->
       after: (err, data) ->
         deepEqual err, undefined
         ok data
+        ok data.redirect
         start()
     form.find('input[name="email"]').val 'test@2.com'
     form.find('input[name="pass"]').val 'password'
@@ -45,6 +46,7 @@ $ ->
       after: (err, data) ->
         deepEqual err, undefined
         ok data
+        ok data.redirect
         start()
     d = new Date()
     form.find('input[name="email"]').val "test#{d.getTime()}@2.com"
@@ -79,3 +81,57 @@ $ ->
     e = $.Event "keyup"
     e.which = 13
     form.dailycred('method','signup').find('input[name="email"]').trigger e
+
+  test "errors with bad pass on signin", ->
+    stop()
+    form = FORM().dailycred
+      client_id: clientId
+      after: (err, data) ->
+        ok err
+        deepEqual data, undefined
+        start()
+    form.find('input[name="email"]').val 'test@2.com'
+    form.find('input[name="pass"]').val 'passwor'
+    form.dailycred 'submit'
+
+  test "errors with bad pass on signup", ->
+    stop()
+    form = FORM().dailycred
+      client_id: clientId
+      after: (err, data) ->
+        ok err
+        deepEqual data, undefined
+        start()
+    d = new Date()
+    form.find('input[name="email"]').val "test#{d}@2.com" #poorly formatted email
+    form.find('input[name="pass"]').val 'password'
+    form.dailycred('method','signup').dailycred('submit')
+
+  test "signs in successfully with user flow", ->
+    stop()
+    form = FORM().dailycred
+      client_id: clientId
+      style: 'user'
+      after: (err, data) ->
+        deepEqual err, undefined
+        ok data
+        ok data.user
+        start()
+    form.find('input[name="email"]').val 'test@2.com'
+    form.find('input[name="pass"]').val 'password'
+    form.dailycred 'submit'
+
+  test "signs up successfully with user flow", ->
+    stop()
+    form = FORM().dailycred
+      client_id: clientId
+      style: 'user'
+      after: (err, data) ->
+        deepEqual err, undefined
+        ok data
+        ok data.user
+        start()
+    d = new Date()
+    form.find('input[name="email"]').val "test#{d.getTime()}@2.com"
+    form.find('input[name="pass"]').val 'password'
+    form.dailycred('method','signup').dailycred('submit')
