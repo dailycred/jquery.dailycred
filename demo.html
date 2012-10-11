@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>Dailycred Jquery Plugin Demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+  <script src="https://s3.amazonaws.com/file.dailycred.com/js/jquery-dailycred.js" type="text/javascript"></script>
+  <script>
+    $(document).ready(function() {
+      $('#dailycred').dailycred({
+        client_id: "dailycred",
+        style: 'user',
+        after: function(obj) {
+          $('#dailycred-jq-response').html(JSON.stringify(obj, void 0, 2));
+        }
+      });
+      return $('#demo-signup').click(function() {
+        $('#dailycred').dailycred('method', 'signup').dailycred('submit');
+        return false;
+      });
+    });
+  </script>
+  <link rel="stylesheet" href="https://www.dailycred.com/public/css/bootstrap.css">
+</head>
+<body style="text-align:center;padding:100px;">
+<form id="dailycred" style="text-align:center; width: 159px; margin: 0px auto;">
+  <input type="email" name="email" placeholder="Email"><br>
+  <input type="password" name="pass" placeholder="Password"><br>
+  <input type="submit" value="Log In" style="float: left;" class="btn">
+   or <a href="#" id="demo-signup" class="btn">Sign Up</a>
+</form>
+<h5>Response:</h5>
+<pre id="dailycred-jq-response" class="prettyprint">
+
+</pre>
+</body>
+</html>

@@ -1,0 +1,6 @@
+gem 'guard'
+gem 'guard-coffeescript'
+gem 'growl'
+gem 'ruby_gntp'
+gem 'rb-fsevent'
+gem 'aws'
