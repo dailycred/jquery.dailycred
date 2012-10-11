@@ -27,10 +27,11 @@ methods =
     this.submit (e) ->
       methods['submit']($(e.target))
       e.preventDefault()
-    this.find('input').keypress (e) ->
+    this.find('input').keyup (e) ->
       if e.which == 13
         methods['submit']($(e.target).closest('form'))
         e.preventDefault()
+    this
   submit: ($el) ->
     if !$el
       $el = this
