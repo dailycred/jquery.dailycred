@@ -10,11 +10,14 @@ task :upload do
     "js/jquery-dailycred.js",
     File.open("lib/jquery-dailycred.js"),
     'file.dailycred.com',
-    :content_type => 'application/octet-stream')
+    :content_type => 'text/javascript')
 
   AWS::S3::S3Object.store(
     "js/jquery-demo.html",
     File.open("demo.html"),
     'file.dailycred.com')
+  print "Uploaded.\n"
 end
+
+task :default => :upload
 

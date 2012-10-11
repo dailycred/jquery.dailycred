@@ -25,16 +25,15 @@ methods =
       opts[k] = opts[k] || v
     this.data('dailycred',opts)
     this.submit (e) ->
-      methods['submit'](e)
+      methods['submit']($(e.target))
+      e.preventDefault()
     this.find('input').keypress (e) ->
       if e.which == 13
-        methods['submit'](e)
-  submit: (e) ->
-    if !e
+        methods['submit']($(e.target).closest('form'))
+        e.preventDefault()
+  submit: ($el) ->
+    if !$el
       $el = this
-    else
-      e.preventDefault()
-      $el = $(e.target)
     data = $el.data('dailycred')
     url = "#{data.site}#{data.action()}#{params(data,$el)}"
     $.ajax
@@ -76,4 +75,6 @@ $(document).ready ->
       prettyPrint()
   $('#demo-signup').click ->
     $('#dailycred').dailycred('method','signup').dailycred('submit')
+    # set the method back to signin
+    $('#dailycred').dailycred('method','signin')
     false
