@@ -8,7 +8,7 @@ task :upload do
 
   AWS::S3::S3Object.store(
     "js/jquery-dailycred.js",
-    File.open("lib/jquery.js"),
+    File.open("lib/jquery-dailycred.js"),
     'file.dailycred.com',
     :content_type => 'application/octet-stream')
 
